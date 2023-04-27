@@ -21,11 +21,7 @@ router
     }
   })
   .get("/elections/:county", async (context) => {
-    if (books.has(context?.params?.county)) {
-      context.response.body = await fetch(`https://www.voterfocus.com/CampaignFinance/candidate_pr.php?c=`+context.params.county);
-      
-      // context.response.body = books.get(context.params.county);
-    }
+    context.response.body = await fetch(`https://www.voterfocus.com/CampaignFinance/candidate_pr.php?c=`+context?.params?.county);
   });
 
 const app = new Application();
