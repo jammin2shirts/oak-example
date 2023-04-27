@@ -19,6 +19,12 @@ router
     if (books.has(context?.params?.id)) {
       context.response.body = books.get(context.params.id);
     }
+  })
+  .get("/elections/:county", async (context) => {
+    if (books.has(context?.params?.county)) {
+      context.response.body = await fetch("https://api.github.com/users/denoland");
+      // context.response.body = books.get(context.params.county);
+    }
   });
 
 const app = new Application();
