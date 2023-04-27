@@ -20,8 +20,8 @@ router
       context.response.body = books.get(context.params.id);
     }
   })
-  .get("/elections/:county", async (context) => {
-    context.response.body = await fetch(`https://www.voterfocus.com/CampaignFinance/candidate_pr.php?c=`+context?.params?.county);
+  .get("/elections/:county", (context) => {
+    context.response.redirect(`https://www.voterfocus.com/CampaignFinance/candidate_pr.php?c=`+context?.params?.county);
   });
 
 const app = new Application();
