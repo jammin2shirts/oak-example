@@ -30,9 +30,8 @@ router
       respondWithAllRooms(ws);
     };
 
-    ws.onmessage = async ({ data }) => {
-      const blob = new Blob([data]);
-      const { name, action } = JSON.parse(await blob.text());
+    ws.onmessage = ({ data }) => {
+      const { name, action } = JSON.parse(data);
       if (action == "AddRoom") {
         addNewRoom(name);
         respondWithAllRooms(ws);
