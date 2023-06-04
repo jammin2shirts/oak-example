@@ -60,8 +60,9 @@
 
 import { WebSocketClient, WebSocketServer } from "https://deno.land/x/websocket@v0.1.4/mod.ts";
 
-const wss = new WebSocketServer(3003);
+const wss = new WebSocketServer(8000);
 wss.on("connection", function (ws: WebSocketClient) {
+  console.log(`new connection added: ${wss.clients.size}`)
   ws.on("message", function (message: string) {
     console.log(message);
     // ws.send(message);
