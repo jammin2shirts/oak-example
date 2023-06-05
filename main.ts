@@ -39,7 +39,7 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 await app.listen({ port: 8000 });
 
-const wss = new WebSocketServer(8000);
+const wss = new WebSocketServer(8002);
 wss.on("connection", function (ws: WebSocketClient) {
   console.log(`new connection added: ${wss.clients.size}`)
   emitToAll();
