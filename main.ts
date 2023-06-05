@@ -59,16 +59,24 @@
 // await app.listen({ port: 8000 });
 
 import { WebSocketClient, WebSocketServer } from "https://deno.land/x/websocket@v0.1.4/mod.ts";
-
+const rooms:string[] = [];
 const wss = new WebSocketServer(8000);
 wss.on("connection", function (ws: WebSocketClient) {
   console.log(`new connection added: ${wss.clients.size}`)
-  ws.on("message", function (message: string) {
-    console.log(message);
+  emitToAll();
+  ws.on("message", (message) => {
+    console.dir(message);
+    const data = JSON.parse(message)
+    rooms.push(data.name)
+    console.dir(rooms)
     // ws.send(message);
-    wss.clients.forEach(client => {
-      // console.dir(client)
-      client.send('hello')
-    })
+    emitToAll();
+   
   });
 });
+const emitToAll=()=>{
+  wss.clients.forEach(client => {
+    // console.dir(client)
+    client.send(JSON.stringify(rooms))
+  })
+}
