@@ -1,4 +1,4 @@
-// import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+
 
 // const availableRooms: string[] = ["wow"];
 // const addNewRoom = (name: string) => {
@@ -13,7 +13,14 @@
 //   };
 //   ws.send(JSON.stringify(refreshedRooms));
 // };
-// const router = new Router();
+// rou
+
+
+import { WebSocketClient, WebSocketServer } from "https://deno.land/x/websocket@v0.1.4/mod.ts";
+import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+const rooms:string[] = [];
+const app = new Application();
+const router = new Router();
 // router
 //   .get("/wss", (ctx) => {
 //     if (!ctx.isUpgradable) {
@@ -52,14 +59,10 @@
 //     }
 //   });
 
-// const app = new Application();
-// app.use(router.routes());
-// app.use(router.allowedMethods());
+app.use(router.routes());
+app.use(router.allowedMethods());
+await app.listen({ port: 8000 });
 
-// await app.listen({ port: 8000 });
-
-import { WebSocketClient, WebSocketServer } from "https://deno.land/x/websocket@v0.1.4/mod.ts";
-const rooms:string[] = [];
 const wss = new WebSocketServer(8000);
 wss.on("connection", function (ws: WebSocketClient) {
   console.log(`new connection added: ${wss.clients.size}`)
@@ -69,14 +72,12 @@ wss.on("connection", function (ws: WebSocketClient) {
     const data = JSON.parse(message)
     rooms.push(data.name)
     console.dir(rooms)
-    // ws.send(message);
     emitToAll();
-   
   });
 });
+
 const emitToAll=()=>{
   wss.clients.forEach(client => {
-    // console.dir(client)
     client.send(JSON.stringify(rooms))
   })
 }
