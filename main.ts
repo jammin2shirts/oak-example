@@ -13,51 +13,27 @@
 //   };
 //   ws.send(JSON.stringify(refreshedRooms));
 // };
-// rou
-
-
 import { WebSocketClient, WebSocketServer } from "https://deno.land/x/websocket@v0.1.4/mod.ts";
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 const rooms:string[] = [];
 const app = new Application();
 const router = new Router();
-// router
-//   .get("/wss", (ctx) => {
-//     if (!ctx.isUpgradable) {
-//       ctx.throw(501);
-//     }
-//     const ws = ctx.upgrade();
-
-//     ws.onopen = () => {
-//       console.log("Connected to client");
-//       // ws.send("Hello from server!");
-//       respondWithAllRooms(ws);
-//     };
-
-//     ws.onmessage = (e) => {
-//       const { name, action } = JSON.parse(e.data);
-//       if (action == "AddRoom") {
-//         addNewRoom(name);
-//         respondWithAllRooms(ws);
-//       }
-//       console.log(`Got message from client:${name} - ${action}`);
-
-//       ws.send("got the message");
-//     };
-
-//     ws.onclose = () => console.log("Disconncted from client");
-//   })
-//   .get("/wss/rooms", (ctx) => {
-//     //use this to programmatically set new websockets for each new room added
-//     ctx.response.body = availableRooms;
-//   })
-//   .get("/wss/:roomName", (ctx) => {
-//     //use this to programmatically set new websockets for each new room added
-//     if (availableRooms.includes(ctx?.params?.roomName)) {
-//       console.log("this room exists");
-//       ctx.response.body = `it's here`;
-//     }
-//   });
+router
+  .get("/abc", (ctx) => {
+    console.log('abc')
+    ctx.response.body = "hi"
+  })
+  // .get("/wss/rooms", (ctx) => {
+  //   //use this to programmatically set new websockets for each new room added
+  //   ctx.response.body = availableRooms;
+  // })
+  // .get("/wss/:roomName", (ctx) => {
+  //   //use this to programmatically set new websockets for each new room added
+  //   if (availableRooms.includes(ctx?.params?.roomName)) {
+  //     console.log("this room exists");
+  //     ctx.response.body = `it's here`;
+  //   }
+  // });
 
 app.use(router.routes());
 app.use(router.allowedMethods());
